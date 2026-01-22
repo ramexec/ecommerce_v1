@@ -1,0 +1,6 @@
+[submodule "my_backend"]
+	path = my_backend
+	url = https://github.com/ramexec/my_backend.git
+[submodule "my_frontend"]
+	path = my_frontend
+	url = https://github.com/ramexec/my_frontend.git

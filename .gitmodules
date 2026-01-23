@@ -4,3 +4,6 @@
 [submodule "my_frontend"]
 	path = my_frontend
 	url = https://github.com/ramexec/my_frontend.git
+[submodule "ecommerce_v1"]
+	path = ecommerce_v1
+	url = https://github.com/ramexec/ecommerce_v1.git

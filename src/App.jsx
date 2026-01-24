@@ -1,10 +1,10 @@
-import  {Home}  from './components/Home/Home'
 import "./App.css"
+import { Outlet } from 'react-router-dom'
 
 export const App = () => {
   return (
     <div className="container">
-      <Home />
+      <Outlet />
     </div>
   )
 }

@@ -1,7 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import {createBrowserRouter, RouterProvider} from 'react-router-dom'
+import {createBrowserRouter, createHashRouter, RouterProvider} from 'react-router-dom'
 import {Login } from './components/Login/Login'
 import { Home } from './components/Home/Home'
 import { App } from './App'
@@ -9,9 +9,9 @@ import { RequireAuth } from './services/RequireAuth'
 import { Profile } from './components/Profile/Profile'
 import { AuthProvider } from './services/Auth'
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
-    path: "/ecommerce_v1",
+    path: "/",
     element: <App />,
     children: [
       { index: true, element: <Home /> },

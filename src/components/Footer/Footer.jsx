@@ -1,10 +1,10 @@
-import { Twitter, Instagram, Linkedin, Github, Mail, Phone, MapPin, Heart } from 'lucide-react';
+import { Mail, Phone, MapPin, Heart } from 'lucide-react';
 import './Footer.css'
 import facebookIcon from "../../assets/svg/facebook.svg";
 import instagramIcon from "../../assets/svg/instagram.svg";
 import githubIcon from "../../assets/svg/github.svg";
 import x from "../../assets/svg/x.svg"
-
+import { NavLink } from 'react-router-dom'
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -40,16 +40,16 @@ export function Footer() {
             <h3 className="footer-section-title">Quick Links</h3>
             <ul className="footer-links-list">
               <li className="footer-link-item">
-                <a href="#" className="footer-link">Home</a>
+                <NavLink to="/home" className="footer-link">Home</NavLink>
               </li>
-              <li className="footer-link-item">
+              {/* <li className="footer-link-item">
                 <a href="#" className="footer-link">Services</a>
+              </li> */}
+              <li className="footer-link-item">
+                <a href="https://ramexec.github.io/my_frontend/" className="footer-link">Portfolio</a>
               </li>
               <li className="footer-link-item">
-                <a href="#" className="footer-link">Portfolio</a>
-              </li>
-              <li className="footer-link-item">
-                <a href="#" className="footer-link">About</a>
+                <a href="https://ramexec.github.io/my_frontend/" className="footer-link">About</a>
               </li>
               <li className="footer-link-item">
                 <a href="#" className="footer-link">Contact</a>
@@ -59,7 +59,7 @@ export function Footer() {
 
           {/* Contact Info */}
           <div className="footer-section">
-            <h3 className="footer-section-title">Contact Us</h3>
+            <h3 className="footer-section-title">Contact Me</h3>
             <div className="footer-contact-item">
               <div className="footer-contact-icon">
                 <Mail size={18} />

@@ -37,14 +37,15 @@ export const AuthProvider = ({children}) =>{
 
     const login = async (username,password) =>{
         setLoading(true)
-        
         try{
              const res = await loginbackend(username,password);
             setUser(res)
             localStorage.setItem("jwt",res.jwt)
+            return true;
         }
         catch(err){
             console.log(err)
+            return false;
         }finally{
             setLoading(false)
         }

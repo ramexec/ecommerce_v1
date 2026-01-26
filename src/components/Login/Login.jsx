@@ -15,8 +15,9 @@ export const Login = () => {
     const redirectPath = location.state?.path || '/';
     
     const handleLogin = async () => {
-        await auth.login(username, password);
-        navigate(redirectPath, { replace: true });
+        if (await auth.login(username, password))
+            navigate(redirectPath, { replace: true });
+        window.location.reload()
     };
 
     return (

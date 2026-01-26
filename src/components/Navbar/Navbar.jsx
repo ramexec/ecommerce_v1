@@ -21,7 +21,6 @@ export const Navbar = () => {
     };
 
     const handleLogin = () => {
-    setUser({ name: 'Demo User' });
     setIsMenuOpen(false);
     };
 

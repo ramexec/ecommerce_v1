@@ -17,7 +17,7 @@ export function Footer() {
           <div className="footer-section">
             <h3 className="footer-section-title">About Us</h3>
             <p className="footer-description">
-              We provide high-quality web development and design services to help businesses grow and succeed in the digital world.
+              I provide high-quality development and design services to help businesses grow and succeed in the digital world.
             </p>
             <div className="footer-social-links">
               <a href="#" className="footer-social-icon" aria-label="Facebook">
@@ -84,7 +84,7 @@ export function Footer() {
         {/* Bottom Section */}
         <div className="footer-bottom">
           <p className="footer-copyright">
-            © {currentYear} MyApp. Made with 
+            © {currentYear} MyCommerce . Made with 
             <Heart size={16} className="footer-heart" fill="currentColor" />
             All rights reserved.
           </p>

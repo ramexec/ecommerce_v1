@@ -17,7 +17,7 @@ export const ProductCard = ({ product }) => {
       </div>
       
       <div className="product-info">
-        <h3 className="product-name">{product.name}</h3>
+        <h3 className="product-name">{product.name.substring(0, 25)}{product.name.length > 30 ? " ....." : ""}</h3>
         <p className="product-description">{product.description}</p>
         
         <div className="product-footer">

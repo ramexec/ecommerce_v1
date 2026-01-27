@@ -49,6 +49,9 @@
 }
 
 .product-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     font-size: 1.125rem;
     font-weight: 600;
     color: #111827;

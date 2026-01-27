@@ -8,6 +8,7 @@ import { App } from './App'
 import { RequireAuth } from './services/RequireAuth'
 import { Profile } from './components/Profile/Profile'
 import { AuthProvider } from './services/Auth'
+import { Admin } from './components/Admin/Admin'
 
 const router = createHashRouter([
   {
@@ -21,6 +22,13 @@ const router = createHashRouter([
         element: <RequireAuth />,
         children: [
           { path: "profile", element: <Profile /> }
+        ]
+      },
+
+      {
+        element: <RequireAuth adminPage={true} />,
+        children: [
+          { path: "admin", element: <Admin /> }
         ]
       }
     ]

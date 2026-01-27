@@ -1,18 +1,19 @@
-import axios from 'axios'
+import api from './api'
 
-export const loginbackend = async (username, password) => {
-  const query = {
-    username,
-    password,
-  }
-
-  const urlFull = import.meta.env.VITE_BACKEND_URL + '/auth/login'
-
+export const loginbackend = async (data) => {
   try {
-    const res = await axios.post(urlFull, query)
+    const res = await api.post('/auth/login', data)
     return res.data
   } catch (err) {
-    console.error(err)
+    throw err
+  }
+}
+
+export const signupbackend = async (data) =>{
+  try {
+    const res = await api.post('/auth/signup', data)
+    return res.data
+  } catch (err) {
     throw err
   }
 }

@@ -13,7 +13,7 @@
   border-radius: 1rem;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   width: 100%;
-  max-width: 420px;
+  max-width: 600px;
 }
 
 .login-header {
@@ -78,7 +78,7 @@
   color: #9ca3af;
 }
 
-.loginpanel button {
+.loginpanel > .login-btn {
   width: 100%;
   padding: 0.875rem;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -96,18 +96,29 @@
   gap: 0.5rem;
 }
 
-.loginpanel button:hover:not(:disabled) {
+.loginpanel> .login-btn:hover:not(:disabled) {
   transform: translateY(-2px);
   box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
 }
 
-.loginpanel button:disabled {
+.loginpanel> .login-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
 
-.loginpanel button:active:not(:disabled) {
+.loginpanel> .login-btn:active:not(:disabled) {
   transform: translateY(0);
+}
+
+.register-name{
+  display: flex;
+  gap:10px
+}
+
+@media (max-width:800px) {
+  .register-name{
+    flex-direction: column;
+  }
 }
 
 .login-footer {
@@ -127,6 +138,18 @@
   text-decoration: underline;
 }
 
+.register-btn{
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+
+  color: #667eea;
+  font-weight: 600;
+  font: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+}
 @media (max-width: 480px) {
   .loginpanel {
     padding: 2rem 1.5rem;

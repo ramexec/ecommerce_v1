@@ -1,63 +1,74 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { loginbackend } from "./Login";
+import { loginbackend, signupbackend } from "./Login";
 import { validateJwt } from "./ValidateToken";
+import { getUserDetailsDecoded } from "./Services";
 
 const AuthContext = createContext(null)
 
 export const AuthProvider = ({children}) =>{
-    const [user,setUser ] = useState(null)
-    const [loading,setLoading] = useState(true)
+
+const [user,setUser ] = useState(null)
+const [loading,setLoading] = useState(true)
 
     useEffect(() => {
         const checkJwt = async () => {
             const token = localStorage.getItem("jwt");
 
             if (!token) {
-            setUser(null);
-            setLoading(false);
-            return;
+                setUser(null);
+                setLoading(false);
+                return;
             }
 
             try {
-            await validateJwt(token);
-            setUser({ jwt: token });
-            console.log("JWT valid");
+                await validateJwt(token);
+                const decoded = await getUserDetailsDecoded();
+                setUser(decoded);
             } catch (err) {
-            console.log("JWT invalid");
-            localStorage.removeItem("jwt");
-            setUser(null);
+                localStorage.removeItem("jwt");
+                setUser(null);
             } finally {
-            setLoading(false);
+                setLoading(false);
             }
         };
 
-         checkJwt();
+            checkJwt();
     }, []);
 
 
-    const login = async (username,password) =>{
+    const login = async (data) =>{
         setLoading(true)
         try{
-             const res = await loginbackend(username,password);
+            const res = await loginbackend(data);
             setUser(res)
             localStorage.setItem("jwt",res.jwt)
             return true;
         }
         catch(err){
-            console.log(err)
-            return false;
+            throw err;
         }finally{
             setLoading(false)
         }
     }
 
+    const signup = async (data) => {
+        setLoading(true);
+        try{
+            const res = await signupbackend(data);
+            return res;
+        }
+        catch(err){
+            throw err;
+        }finally{
+            setLoading(false);
+        }
+    }
     const logout = () => {
         localStorage.removeItem("jwt");
         setUser(null);
     };
 
-
-    return <AuthContext.Provider value={{user, login , logout, loading}}>{children}</AuthContext.Provider>
+    return <AuthContext.Provider value={{user, login , logout,signup, loading }}>{children}</AuthContext.Provider>
 }
 
 

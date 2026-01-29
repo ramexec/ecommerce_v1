@@ -40,8 +40,9 @@ const [loading,setLoading] = useState(true)
         setLoading(true)
         try{
             const res = await loginbackend(data);
-            setUser(res)
             localStorage.setItem("jwt",res.jwt)
+            const decoded = await getUserDetailsDecoded();
+            setUser(decoded);
             return true;
         }
         catch(err){

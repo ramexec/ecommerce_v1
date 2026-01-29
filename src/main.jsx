@@ -9,6 +9,8 @@ import { RequireAuth } from './services/RequireAuth'
 import { Profile } from './components/Profile/Profile'
 import { AuthProvider } from './services/Auth'
 import { Admin } from './components/Admin/Admin'
+import { Products } from './components/Admin/Products/Products'
+import {Dashboard } from  './components/Admin/Dashboard/Dashboard'
 
 const router = createHashRouter([
   {
@@ -28,7 +30,14 @@ const router = createHashRouter([
       {
         element: <RequireAuth adminPage={true} />,
         children: [
-          { path: "admin", element: <Admin /> }
+          { path: "admin", element: <Admin />,
+             children: [
+              { index: true, element: <Dashboard /> },
+              { path: "dashboard", element: <Dashboard /> },
+              { path: "products", element: <Products /> },
+              // { path: "category", element: <Catego /> }
+            ]
+           }
         ]
       }
     ]

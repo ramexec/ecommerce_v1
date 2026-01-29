@@ -1,21 +1,16 @@
 import { useEffect, useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import './Navbar.css'
 import { useAuth } from '../../services/Auth'
-import { Home, User, LogIn, LogOut, Menu, X } from 'lucide-react';
+import { Home, User, LogIn, LogOut, Menu, X, ShieldUser } from 'lucide-react';
 
 export const Navbar = () => {
 
     const auth = useAuth();
-    const [user, setUser] = useState(null);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    
-    useEffect(() => {
-        setUser(auth.user)
-    },[auth.user])
+    let navigate = useNavigate();
 
     const handleLogOut = () => {
-        setUser(null);
         setIsMenuOpen(false);
         auth.logout();
     };
@@ -28,6 +23,9 @@ export const Navbar = () => {
         setIsMenuOpen(!isMenuOpen);
     };
 
+    const handleAdmin = () => {
+      setIsMenuOpen(!isMenuOpen);
+    }
   return (
      <nav className="modern-navbar">
         <div className="navbar-container">
@@ -46,13 +44,19 @@ export const Navbar = () => {
               <User size={18} />
               Profile
             </NavLink>
-            {!user && (
+            {!auth.user && (
               <NavLink to="/login" className="navbar-link" onClick={handleLogin}>
                 <LogIn size={18} />
                 Login
               </NavLink>
             )}
-            {user && (
+            {auth.user && auth?.user?.role === 'ROLE_ADMIN' && (
+              <NavLink to='/admin' className="navbar-admin-btn" onClick={handleAdmin}>
+                <ShieldUser size={18}/>
+                Admin
+              </NavLink>
+            )}
+            {auth.user && (
               <button className="navbar-logout-btn" onClick={handleLogOut}>
                 <LogOut size={18} />
                 Logout

@@ -1,8 +1,16 @@
+.admin-products-header{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  overflow: auto;
+  margin-bottom: 16px;
+  align-items: center;
+}
+
 .admin-products-searchbar {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 16px;
 }
 
 .admin-products-searchbar input {
@@ -21,7 +29,7 @@
   background: white;
   border-radius: 12px;
   border: 1px solid #e5e7eb;
-  overflow: hidden;
+  overflow: auto;
   width: 100%;
 }
 
@@ -76,6 +84,8 @@
 }
 
 .admin-page-control{
+
+    align-items: center;
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -83,6 +93,7 @@
     padding-right: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
+    gap: 10px 
 }
 .product-actions{
     display: flex;
@@ -91,5 +102,12 @@
 }
 
 .product-actions > button{
+    display: flex;
     white-space: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.overflow-name-link{
+  text-decoration: none;
 }

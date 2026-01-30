@@ -16,9 +16,16 @@ export const Admin = () => {
           <li className={tab === 'category' ? "active" : " "} onClick={() => setTab('category')}><NavLink to="category" className='nav-text'>Category</NavLink></li>
         </ul>
         <ul className="admin-navigation-links-mobile">
-            <li className={tab === 'dashboard' ? "active" : " "} onClick={() => setTab('dashboard')}><span className='nav-text'>Dashboard</span></li>
+          <li className={tab === 'dashboard' ? "active" : " "} onClick={() => setTab('dashboard')}><span className='nav-text'>Dashboard</span></li>
           <li className={tab === 'products' ? "active" : " "} onClick={() => setTab('products')}><span className='nav-text'>Products</span></li>
           <li className={tab === 'category' ? "active" : " "} onClick={() => setTab('category')}><span className='nav-text'>Category</span></li>
+          <li>
+            <select defaultValue={"more"}name="admin-navigation-links-mobile-options" id="">
+              <option disabled value={"more"}> More</option>
+              <option>some option</option>
+              <option> some option </option>
+            </select>
+          </li>
         </ul>
       </div>
       <div className="admin-body">

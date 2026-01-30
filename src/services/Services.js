@@ -15,3 +15,8 @@ export const getUserDetailsDecoded = async () => {
   const res = await decodeJwt();
   return res;
 }
+
+export const getPaginatedProducts = async ({ page=0, size=10, query=''}) => {
+  const res = await api.get(`/ecommerce/openapi/products?page=${page}&size=${size}&query=${query}`);
+  return res;
+}

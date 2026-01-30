@@ -1,133 +1,94 @@
-import { Search } from 'lucide-react';
+import { ChevronLeft, Plus, Search } from 'lucide-react';
 import React, { useEffect, useState } from 'react'
 import './Products.css'
+import { getPaginatedProducts } from '../../../services/Services';
+import { toast } from 'react-toastify';
+import { ChevronRight } from 'lucide-react';
+import { AddProductModal } from './ProductModal/AddProductModal';
 
 export const Products = () => {
-    const [products, setProducts] = useState([
-    {
-        id: 1,
-        name: "Wireless Headphones",
-        description: "Noise cancelling over-ear headphones",
-        price: 8999,
-        discount: 10,
-        image: "https://picsum.photos/200?1",
-        is_featured: true,
-        rating: 5,
-        category_id: 1
-    },
-    {
-        id: 2,
-        name: "Gaming Mouse",
-        description: "RGB ergonomic gaming mouse",
-        price: 2499,
-        discount: 5,
-        image: "https://picsum.photos/200?2",
-        is_featured: false,
-        rating: 4,
-        category_id: 1
-    },
-    {
-        id: 3,
-        name: "Mechanical Keyboard",
-        description: "Blue switch mechanical keyboard",
-        price: 5999,
-        discount: 15,
-        image: "https://picsum.photos/200?3",
-        is_featured: true,
-        rating: 5,
-        category_id: 1
-    },
-    {
-        id: 4,
-        name: "Running Shoes",
-        description: "Lightweight sports running shoes",
-        price: 3499,
-        discount: 20,
-        image: "https://picsum.photos/200?4",
-        is_featured: false,
-        rating: 4,
-        category_id: 2
-    },
-    {
-        id: 5,
-        name: "Smart Watch",
-        description: "Fitness tracking smartwatch",
-        price: 12999,
-        discount: 12,
-        image: "https://picsum.photos/200?5",
-        is_featured: true,
-        rating: 5,
-        category_id: 1
-    },
-    {
-        id: 6,
-        name: "Office Chair",
-        description: "Ergonomic mesh office chair",
-        price: 10999,
-        discount: 18,
-        image: "https://picsum.photos/200?6",
-        is_featured: false,
-        rating: 4,
-        category_id: 3
-    },
-    {
-        id: 7,
-        name: "Backpack",
-        description: "Waterproof travel backpack",
-        price: 1999,
-        discount: 8,
-        image: "https://picsum.photos/200?7",
-        is_featured: false,
-        rating: 4,
-        category_id: 2
-    },
-    {
-        id: 8,
-        name: "Bluetooth Speaker",
-        description: "Portable mini speaker",
-        price: 2999,
-        discount: 10,
-        image: "https://picsum.photos/200?8",
-        is_featured: true,
-        rating: 5,
-        category_id: 1
-    },
-    {
-        id: 9,
-        name: "LED Monitor",
-        description: "24 inch full HD monitor",
-        price: 14999,
-        discount: 7,
-        image: "https://picsum.photos/200?9",
-        is_featured: false,
-        rating: 4,
-        category_id: 1
-    },
-    {
-        id: 10,
-        name: "Desk Lamp",
-        description: "Adjustable LED desk lamp",
-        price: 1299,
-        discount: 5,
-        image: "https://picsum.photos/200?10",
-        is_featured: false,
-        rating: 3,
-        category_id: 3
-    }
-]);
+
+    const [products, setProducts] = useState(null);
     const [search, setSearch] = useState('');
+    const [page,setPage] = useState(0);
+    const [first,setFirst ] = useState(false );
+    const [last, setLast ] = useState(false );
+    const [modalOpen, setModalOpen] = useState(false);
+    const [editProduct, setEditProduct] = useState(null);
+    const [size,setSize] = useState(10);
 
-    const filteredProducts = products.filter(p =>
-        p.name.toLowerCase().includes(search.trim().toLowerCase())
-    );
 
+    useEffect(() => {
+        loadProducts();
+    }, []);
+
+
+    const loadProducts = async ( page , size , query) => { 
+        try{
+            const res = await getPaginatedProducts({page: page,size: size,query: query})
+            console.log(res)
+            setPage(res.data.number)
+            setLast(res.data.last);
+            setFirst(res.data.first);
+            setProducts(res.data.content)
+        }catch(err) {
+            toast.error(err);
+        }
+    }
+
+    const handleFullText = (e,text)=> {
+        e.preventDefault(); // prevents page jump because of href="#"
+        console.log(text);
+        toast.info(text);
+    }
+
+    const smallTextContainer = (val, size = 10 ) => {
+
+        if(val.length > size)
+            return(
+            <a className='overflow-name-link' href='#'  onClick={(e) => handleFullText(e, val)}>
+                {val.substring(0, 10) + "..."} 
+            </a>)
+        else
+            return(val)
+    }
+
+    const handleSearch= (val) => {
+        loadProducts(0,10,val);
+    }
+
+    const handleAddProduct = () => {
+    setEditProduct(null);
+    setModalOpen(true);
+    };
+
+    const handleSaveProduct = async (data) => {
+    console.log("SAVE:", data);
+
+    // await createProduct(data)
+
+    setModalOpen(false);
+    loadProducts(0,10,"");
+    };
+
+    const handleNextPage = (val) => {
+        setPage(page + val);
+        loadProducts(page,size,"");
+    }
 
     return (
         <div className="admin-products-container">
-            <div className="admin-products-searchbar">
-                <label><Search /></label>
-                <input type='text' onChange={(e) => setSearch(e.target.value)} />
+            <div className="admin-products-header">
+                <div className="admin-products-searchbar">
+                    <label><Search /></label>
+                    <input type='text' value={search} onChange={(e) => setSearch(e.target.value)}  onKeyDown={(e) => { if(e.key === "Enter") handleSearch(search)}}/>
+                </div>
+
+                <div className="admin-products-toolset">
+                    <button className="admin-products-btn" onClick={handleAddProduct}> <Plus size={18}/></button>
+                </div>
             </div>
+
             <div className="admin-products-table">
                 <table>
                     <thead>
@@ -137,7 +98,7 @@ export const Products = () => {
                             <th>Description</th>
                             <th>Price</th>
                             <th>Discount(%)</th>
-                            <th>Image url</th>
+                            <th>Image</th>
                             <th>Featured?</th>
                             <th>Category</th>
                             <th>Actions</th>
@@ -145,16 +106,16 @@ export const Products = () => {
                     </thead>
 
                     <tbody>
-                        {filteredProducts.map((val) => (
+                        {products?.map((val) => (
                             <tr key={val.id}>
                                 <td>{val.id}</td>
-                                <td>{val.name}</td>
-                                <td>{val.description}</td>
+                                <td style={{whiteSpace:'nowrap'}}>{ smallTextContainer(val.name)}</td>
+                                <td style={{whiteSpace:'nowrap'}}>{ smallTextContainer(val.description)}</td>
                                 <td>{val.price}</td>
                                 <td>{val.discount}%</td>
-                                <td>{val.image}</td>
+                                <td><img src={val.image}/></td>
                                 <td>{val.is_featured ? 'True':'False'}</td>
-                                <td>{val.category_id}</td>
+                                <td>{val.categoryName}</td>
                                 <td className='product-actions'>
                                     <button>Action 1 </button>
                                     <button>Action 2 </button>
@@ -163,14 +124,20 @@ export const Products = () => {
                             </tr>
                         ))}
                     </tbody>
-                </table>
-              <div className="admin-page-control">
-              <button>{"<"}</button>
-              <div className="admin-page-control-text">100</div>
-              <button>{">"}</button>
-              </div>          
+                </table>         
             </div>
-
+            <div className="admin-page-control">
+              <button disabled={first} onClick={() => { handleNextPage(1)}}><ChevronLeft size={18}/></button>
+              <div className="admin-page-control-text">{page}</div>
+              <button disabled={last} onClick={() => {handleNextPage(-1)}}><ChevronRight size={18}/></button>
+            </div> 
+        
+            <AddProductModal 
+                open={modalOpen}
+                onClose={() => setModalOpen(false)}
+                onSave={handleSaveProduct}
+                editData={editProduct}
+            />
         </div>
     )
 }

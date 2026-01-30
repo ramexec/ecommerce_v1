@@ -24,6 +24,7 @@
     flex-direction: column;
     gap: 20px;
     background-color: #fafafa;
+    overflow: auto;
 }
 
 .admin-header {
@@ -131,5 +132,28 @@
 
     .admin-navigation-links-mobile {
         display: flex;
+        flex-wrap: wrap;
+        width: 100%;
     }
+}
+
+.admin-navigation-links-mobile > li {
+    display: flex;
+    padding:  10px ;
+}
+
+.admin-navigation-links-mobile > li  > select {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background: white;
+    cursor: pointer;
+}
+
+.admin-navigation-links-mobile > li  > select > option {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background: white;
+    cursor: pointer;
 }

@@ -41,7 +41,6 @@
 
 .admin-navigation-links>li {
     height: 60px;
-    padding: 10px;
     width: 200px;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
@@ -62,6 +61,7 @@
     height: 100%;
     align-items: center;
     margin-left: 10%;
+    text-decoration: none;
 }
 
 .admin-navigation-links>li:hover {

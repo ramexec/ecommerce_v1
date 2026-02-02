@@ -11,6 +11,7 @@ import { AuthProvider } from './services/Auth'
 import { Admin } from './components/Admin/Admin'
 import { Products } from './components/Admin/Products/Products'
 import {Dashboard } from  './components/Admin/Dashboard/Dashboard'
+import { Category } from './components/Admin/Category/Category'
 
 const router = createHashRouter([
   {
@@ -35,7 +36,7 @@ const router = createHashRouter([
               { index: true, element: <Dashboard /> },
               { path: "dashboard", element: <Dashboard /> },
               { path: "products", element: <Products /> },
-              // { path: "category", element: <Catego /> }
+              { path: "category", element: <Category /> }
             ]
            }
         ]

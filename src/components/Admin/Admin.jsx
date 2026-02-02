@@ -11,14 +11,14 @@ export const Admin = () => {
     <div className="admin-container">
       <div className="admin-navigation">
         <ul className='admin-navigation-links'>
-          <li className={tab === 'dashboard' ? "active" : " "} onClick={() => setTab('dashboard')}><NavLink to="dashboard" className='nav-text'>Dashboard</NavLink></li>
-          <li className={tab === 'products' ? "active" : " "} onClick={() => setTab('products')}><NavLink to="products" className='nav-text'>Products</NavLink></li>
-          <li className={tab === 'category' ? "active" : " "} onClick={() => setTab('category')}><NavLink to="category" className='nav-text'>Category</NavLink></li>
+          <li className={tab === 'dashboard' ? "active" : " "} ><NavLink to="dashboard" className='nav-text' onClick={() => setTab('dashboard')}>Dashboard</NavLink></li>
+          <li className={tab === 'products' ? "active" : " "} ><NavLink to="products" className='nav-text' onClick={() => setTab('products')}>Products</NavLink></li>
+          <li className={tab === 'category' ? "active" : " "} ><NavLink to="category" className='nav-text' onClick={() => setTab('category')}>Category</NavLink></li>
         </ul>
         <ul className="admin-navigation-links-mobile">
-          <li className={tab === 'dashboard' ? "active" : " "} onClick={() => setTab('dashboard')}><span className='nav-text'>Dashboard</span></li>
-          <li className={tab === 'products' ? "active" : " "} onClick={() => setTab('products')}><span className='nav-text'>Products</span></li>
-          <li className={tab === 'category' ? "active" : " "} onClick={() => setTab('category')}><span className='nav-text'>Category</span></li>
+          <li className={tab === 'dashboard' ? "active" : " "} ><NavLink to="dashboard" className='nav-text' onClick={() => setTab('dashboard')}>Dashboard</NavLink></li>
+          <li className={tab === 'products' ? "active" : " "} ><NavLink to="products" className='nav-text' onClick={() => setTab('products')}>Products</NavLink></li>
+          <li className={tab === 'category' ? "active" : " "} ><NavLink to="category" className='nav-text' onClick={() => setTab('category')}>Category</NavLink></li>
           <li>
             <select defaultValue={"more"}name="admin-navigation-links-mobile-options" id="">
               <option disabled value={"more"}> More</option>

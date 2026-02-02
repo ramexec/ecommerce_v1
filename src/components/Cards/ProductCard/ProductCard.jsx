@@ -1,7 +1,31 @@
-import {ShoppingCart, Heart, Star } from 'lucide-react';
+import {ShoppingCart } from 'lucide-react';
 import './ProductCard.css'
+import { addToCart } from '../../../services/Services';
+import {toast} from "react-toastify"
+import {useAuth } from "../../../services/Auth"
 
 export const ProductCard = ({ product }) => {
+
+  const auth = useAuth();
+
+  const handleAddToCart = async () => {
+    const data = {
+      productId: product.id,
+      quantity: 1,
+    }
+    if(auth.user == null || auth.user == undefined)
+    {
+      toast.info("Login to add to cart")
+      return;
+    }
+
+    try {
+      const res = await addToCart(data)
+      toast.success("Added to cart!")
+    } catch (error) {
+      toast.error("Cannot add to cart currently")
+    }
+  } 
 
   return (
     <div className="product-card">
@@ -27,7 +51,7 @@ export const ProductCard = ({ product }) => {
             )}
             <span className="product-price">Rs.{product.price}</span>
           </div>
-          <button className="product-cart-btn">
+          <button className="product-cart-btn" onClick={handleAddToCart}>
             <ShoppingCart size={18} />
             Add to Cart
           </button>

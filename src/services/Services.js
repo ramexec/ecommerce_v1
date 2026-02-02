@@ -26,12 +26,30 @@ export const saveProduct = async ( form ) => {
   return res
 }
 
+export const deleteProduct = async (id) => {
+  const res = await api.delete(`/ecommerce/product/${id}`)
+  return res ;
+}
+
+export const updateProduct = async (id, form) => {
+  const res = await api.put(`/ecommerce/product/${id}`,form);
+  return res;
+}
+
 export const getCategories = async () => {
   const res = await api.get('/ecommerce/openapi/categories');
   return res;
 }
 
-export const deleteProduct = async (id) => {
-  const res = await api.delete(`/ecommerce/product/${id}`)
-  return res ;
+export const updateCategory = async (id, form) => {
+  const res = await api.put(`/ecommerce/category/${id}`,form);
+  return res;
+}
+export const saveCategory = async (form) => {
+  const res = await api.post(`/ecommerce/category`,form);
+  return res;
+} 
+export const deleteCategory = async(id ) => {
+  const res = await api.delete(`/ecommerce/category/${id}`)
+  return res;
 }

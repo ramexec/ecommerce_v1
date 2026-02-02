@@ -1,0 +1,130 @@
+/* Page container */
+.category-container {
+  padding: 20px;
+  background: #f9fafb;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+/* Header */
+.category-container .header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+}
+
+.category-container .header button {
+  background: #4f46e5;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.category-container .header button:hover {
+  background: #4338ca;
+}
+
+/* Table */
+.category-container table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Table head */
+.category-container thead {
+  background: #eef2ff;
+}
+
+.category-container th {
+  text-align: left;
+  padding: 12px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #1f2937;
+}
+
+/* Table body */
+.category-container td {
+  padding: 12px;
+  border-top: 1px solid #e5e7eb;
+  font-size: 14px;
+  color: #374151;
+}
+
+/* Row hover */
+.category-container tbody tr:hover {
+  background: #f9fafb;
+}
+
+/* Action buttons */
+.category-container td button {
+  padding: 6px 10px;
+  border-radius: 4px;
+  border: none;
+  font-size: 13px;
+  cursor: pointer;
+  margin-right: 6px;
+}
+
+/* Edit button */
+.category-container td button:first-child {
+  background: #f59e0b;
+  color: #fff;
+}
+
+.category-container td button:first-child:hover {
+  background: #d97706;
+}
+
+/* Delete button */
+.category-container td button:last-child {
+  background: #ef4444;
+  color: #fff;
+}
+
+.category-container td button:last-child:hover {
+  background: #dc2626;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .category-container table,
+  .category-container thead,
+  .category-container tbody,
+  .category-container th,
+  .category-container td,
+  .category-container tr {
+    display: block;
+  }
+
+  .category-container thead {
+    display: none;
+  }
+
+  .category-container tr {
+    margin-bottom: 12px;
+    background: #fff;
+    border-radius: 6px;
+    padding: 10px;
+  }
+
+  .category-container td {
+    border: none;
+    padding: 6px 0;
+  }
+
+  .category-container td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #6b7280;
+    display: block;
+    margin-bottom: 2px;
+  }
+}

@@ -1,158 +1,192 @@
-import { ChevronLeft, Plus, Search } from 'lucide-react';
-import React, { useEffect, useState } from 'react'
-import './Products.css'
-import { deleteProduct, getPaginatedProducts, saveProduct } from '../../../services/Services';
+import { ChevronLeft, ChevronRight, Plus, Search } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import './Products.css';
+import {
+  deleteProduct,
+  getPaginatedProducts,
+  saveProduct,
+  updateProduct
+} from '../../../services/Services';
 import { toast } from 'react-toastify';
-import { ChevronRight } from 'lucide-react';
 import { AddProductModal } from './ProductModal/AddProductModal';
 
 export const Products = () => {
 
-    const [products, setProducts] = useState(null);
-    const [search, setSearch] = useState('');
-    const [page, setPage] = useState(0);
-    const [first, setFirst] = useState(false);
-    const [last, setLast] = useState(false);
-    const [modalOpen, setModalOpen] = useState(false);
-    const [editProduct, setEditProduct] = useState(null);
-    const [size, setSize] = useState(10);
+  const [products, setProducts] = useState([]);
+  const [search, setSearch] = useState('');
+  const [page, setPage] = useState(0);
+  const [size, setSize] = useState(10);
+  const [first, setFirst] = useState(false);
+  const [last, setLast] = useState(false);
 
+  const [modalOpen, setModalOpen] = useState(false);
+  const [editProduct, setEditProduct] = useState(null);
 
-    useEffect(() => {
-        loadProducts();
-    }, []);
+  useEffect(() => {
+    loadProducts(0, size, "");
+  }, []);
 
-
-    const loadProducts = async (page, size, query) => {
-        try {
-            const res = await getPaginatedProducts({ page: page, size: size, query: query })
-            console.log(res)
-            setPage(res.data.number)
-            setLast(res.data.last);
-            setFirst(res.data.first);
-            setProducts(res.data.content)
-        } catch (err) {
-            toast.error(err);
-        }
+  const loadProducts = async (page, size, query) => {
+    try {
+      const res = await getPaginatedProducts({ page, size, query });
+      setProducts(res.data.content);
+      setPage(res.data.number);
+      setFirst(res.data.first);
+      setLast(res.data.last);
+    } catch {
+      toast.error("Failed to load products");
     }
+  };
 
-    const handleFullText = (e, text) => {
-        e.preventDefault(); // prevents page jump because of href="#"
-        console.log(text);
-        toast.info(text);
+  /* ---------- Helpers ---------- */
+
+  const handleFullText = (e, text) => {
+    e.preventDefault();
+    toast.info(text);
+  };
+
+  const smallText = (val, limit = 12) =>
+    val.length > limit ? (
+      <a href="#" className="overflow-name-link" onClick={(e) => handleFullText(e, val)}>
+        {val.substring(0, limit)}...
+      </a>
+    ) : val;
+
+  /* ---------- Actions ---------- */
+
+  const handleSearch = () => {
+    loadProducts(0, size, search);
+  };
+
+  const handleAddProduct = () => {
+    setEditProduct(null);
+    setModalOpen(true);
+  };
+
+  const handleEditProduct = (product) => {
+    setEditProduct(product);
+    setModalOpen(true);
+  };
+
+  const handleSaveProduct = async (data) => {
+    try {
+      if (editProduct) {
+        await updateProduct(data.id, data);
+        toast.success("Product updated");
+      } else {
+        await saveProduct(data);
+        toast.success("Product added");
+      }
+      closeModal();
+      loadProducts(page, size, search);
+    } catch {
+      toast.error("Error saving product");
     }
+  };
 
-    const smallTextContainer = (val, size = 10) => {
-
-        if (val.length > size)
-            return (
-                <a className='overflow-name-link' href='#' onClick={(e) => handleFullText(e, val)}>
-                    {val.substring(0, 10) + "..."}
-                </a>)
-        else
-            return (val)
+  const handleDeleteProduct = async (id) => {
+    try {
+      await deleteProduct(id);
+      toast.success("Deleted");
+      loadProducts(page, size, search);
+    } catch {
+      toast.error("Delete failed");
     }
+  };
 
-    const handleSearch = (val) => {
-        loadProducts(0, 10, val);
-    }
+  const handlePageChange = (delta) => {
+    const newPage = page + delta;
+    loadProducts(newPage, size, search);
+  };
 
-    const handleAddProduct = () => {
-        setEditProduct(null);
-        setModalOpen(true);
-    };
+  const closeModal = () => {
+    setModalOpen(false);
+    setEditProduct(null);
+  };
 
-    const handleSaveProduct = async (data) => {
+  /* ---------- Render ---------- */
 
-        try {
+  return (
+    <div className="admin-products-container">
 
-            await saveProduct(data);
-            setModalOpen(false);
-            loadProducts(0, 10, "");
-        } catch (err) {
-            toast.error(err);
-        }
-
-    };
-
-    const handleDeleteProduct = async (id) => {
-        try{
-        const  res = await deleteProduct(id);
-        loadProducts();
-        toast.success("Deleted")
-        }
-        catch (err) {
-            toast.error("Error ");
-        }
-    }
-
-    const handleNextPage = (val) => {
-        setPage(page + val);
-        loadProducts(page, size, "");
-    }
-
-    return (
-        <div className="admin-products-container">
-            <div className="admin-products-header">
-                <div className="admin-products-searchbar">
-                    <label><Search /></label>
-                    <input type='text' value={search} onChange={(e) => setSearch(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") handleSearch(search) }} />
-                </div>
-
-                <div className="admin-products-toolset">
-                    <button className="admin-products-btn" onClick={handleAddProduct}> <Plus size={18} /></button>
-                </div>
-            </div>
-
-            <div className="admin-products-table">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Price</th>
-                            <th>Discount(%)</th>
-                            <th>Image</th>
-                            <th>Featured?</th>
-                            <th>Category</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        {products?.map((val) => (
-                            <tr key={val.id}>
-                                <td>{val.id}</td>
-                                <td style={{ whiteSpace: 'nowrap' }}>{smallTextContainer(val.name)}</td>
-                                <td style={{ whiteSpace: 'nowrap' }}>{smallTextContainer(val.description)}</td>
-                                <td>{val.price}</td>
-                                <td>{val.discount}%</td>
-                                <td><img src={val.image} /></td>
-                                <td>{val.is_featured ? 'True' : 'False'}</td>
-                                <td>{val.categoryName}</td>
-                                <td className='product-actions'>
-                                    <button onClick={() => handleDeleteProduct(val.id)}>Delete</button>
-                                    <button>Action 2 </button>
-                                </td>
-
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-            <div className="admin-page-control">
-                <button disabled={first} onClick={() => { handleNextPage(1) }}><ChevronLeft size={18} /></button>
-                <div className="admin-page-control-text">{page}</div>
-                <button disabled={last} onClick={() => { handleNextPage(-1) }}><ChevronRight size={18} /></button>
-            </div>
-
-            <AddProductModal
-                open={modalOpen}
-                onClose={() => setModalOpen(false)}
-                onSave={handleSaveProduct}
-                editData={editProduct}
-            />
+      {/* Header */}
+      <div className="admin-products-header">
+        <div className="admin-products-searchbar">
+          <Search size={18} />
+          <input
+            type="text"
+            value={search}
+            placeholder="Search products..."
+            onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+          />
         </div>
-    )
-}
+
+        <button className="admin-products-btn" onClick={handleAddProduct}>
+          <Plus size={18} />
+        </button>
+      </div>
+
+      {/* Table */}
+      <div className="admin-products-table">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Price</th>
+              <th>Discount %</th>
+              <th>Image</th>
+              <th>Featured</th>
+              <th>Category</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {products.map(val => (
+              <tr key={val.id}>
+                <td>{val.id}</td>
+                <td>{smallText(val.name)}</td>
+                <td>{smallText(val.description)}</td>
+                <td>{val.price}</td>
+                <td>{val.discount}%</td>
+                <td>
+                  <img src={val.image} alt={val.name} />
+                </td>
+                <td>{val.is_featured ? "Yes" : "No"}</td>
+                <td>{val.categoryName}</td>
+                <td className="product-actions">
+                  <button onClick={() => handleEditProduct(val)}>Edit</button>
+                  <button onClick={() => handleDeleteProduct(val.id)}>Delete</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Pagination */}
+      <div className="admin-page-control">
+        <button disabled={first} onClick={() => handlePageChange(-1)}>
+          <ChevronLeft size={18} />
+        </button>
+
+        <span>{page + 1}</span>
+
+        <button disabled={last} onClick={() => handlePageChange(1)}>
+          <ChevronRight size={18} />
+        </button>
+      </div>
+
+      {/* Modal */}
+      <AddProductModal
+        open={modalOpen}
+        editData={editProduct}
+        onSave={handleSaveProduct}
+        onClose={closeModal}
+      />
+    </div>
+  );
+};

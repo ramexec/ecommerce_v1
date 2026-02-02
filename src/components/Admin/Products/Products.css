@@ -1,113 +1,190 @@
-.admin-products-header{
+/* ===== Layout ===== */
+
+.admin-products-container {
+  padding: 24px;
+  background: #f9fafb;
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ===== Header ===== */
+
+.admin-products-header {
   display: flex;
-  flex-direction: row;
-  gap: 10px;
-  overflow: auto;
-  margin-bottom: 16px;
+  justify-content: space-between;
   align-items: center;
+  margin-bottom: 16px;
 }
 
 .admin-products-searchbar {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  background: #fff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  width: 280px;
 }
 
 .admin-products-searchbar input {
-  width: 260px;
-  padding: 10px 14px;
-  border-radius: 8px;
-  border: 1px solid #e5e7eb;
+  border: none;
   outline: none;
+  width: 100%;
+  font-size: 14px;
 }
 
-.admin-products-searchbar input:focus {
-  border-color: #667eea;
+.admin-products-btn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
 }
+
+.admin-products-btn:hover {
+  background: #1d4ed8;
+}
+
+/* ===== Table ===== */
 
 .admin-products-table {
-  background: white;
+  background: #fff;
   border-radius: 12px;
-  border: 1px solid #e5e7eb;
-  overflow: auto;
-  width: 100%;
+  overflow-x: auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
 }
 
-.admin-products-table table {
+table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.95rem;
 }
 
-.admin-products-table thead {
-  background: #f8fafc;
+thead {
+  background: #f3f4f6;
 }
 
-.admin-products-table th {
+th,
+td {
+  padding: 12px 14px;
   text-align: left;
-  padding: 14px 16px;
+  font-size: 14px;
+  border-bottom: 1px solid #e5e7eb;
+  vertical-align: middle;
+}
+
+th {
   font-weight: 600;
   color: #374151;
-  border-bottom: 1px solid #e5e7eb;
 }
 
-.admin-products-table td {
-  padding: 14px 16px;
-  border-bottom: 1px solid #f1f5f9;
-  color: #4b5563;
+tbody tr:hover {
+  background: #f9fafb;
 }
 
-.admin-products-table tbody tr:nth-child(even) {
-  background: #fafafa;
-}
+/* ===== Images ===== */
 
-.admin-products-table tbody tr:hover {
-  background: #eef2ff;
-  transition: background 0.15s ease;
-}
-
-.admin-products-table img {
-  width: 40px;
-  height: 40px;
+td img {
+  width: 42px;
+  height: 42px;
   object-fit: cover;
   border-radius: 6px;
+  border: 1px solid #e5e7eb;
 }
 
-@media (max-width: 800px) {
-  .admin-products-table {
-    overflow-x: auto;
-  }
+/* ===== Overflow text ===== */
 
-  .admin-products-table table {
-    min-width: 800px;
-  }
-}
-
-.admin-page-control{
-
-    align-items: center;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: end;
-    padding-right: 10px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    gap: 10px 
-}
-.product-actions{
-    display: flex;
-    gap: 5px;
-    flex-direction: row;
-}
-
-.product-actions > button{
-    display: flex;
-    white-space: nowrap;
-    justify-content: center;
-    align-items: center;
-}
-
-.overflow-name-link{
+.overflow-name-link {
+  color: #2563eb;
+  cursor: pointer;
   text-decoration: none;
+  font-weight: 500;
+}
+
+.overflow-name-link:hover {
+  text-decoration: underline;
+}
+
+/* ===== Actions ===== */
+
+.product-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.product-actions button {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.product-actions button:first-child {
+  background: #f59e0b;
+  color: white;
+}
+
+.product-actions button:first-child:hover {
+  background: #d97706;
+}
+
+.product-actions button:last-child {
+  background: #ef4444;
+  color: white;
+}
+
+.product-actions button:last-child:hover {
+  background: #dc2626;
+}
+
+/* ===== Pagination ===== */
+
+.admin-page-control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.admin-page-control button {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.admin-page-control button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.admin-page-control span {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ===== Responsive ===== */
+
+@media (max-width: 768px) {
+  .admin-products-searchbar {
+    width: 100%;
+  }
+
+  .admin-products-header {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+
+  .product-actions {
+    flex-direction: column;
+  }
 }

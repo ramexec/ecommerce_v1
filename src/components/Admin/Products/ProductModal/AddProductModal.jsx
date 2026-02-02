@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './AddProductModal.css'
 import { getCategories } from '../../../../services/Services';
-import { toast } from 'react-toastify';
 
 export const AddProductModal = ({ open, onClose, onSave, editData }) => {
 
@@ -19,6 +18,7 @@ export const AddProductModal = ({ open, onClose, onSave, editData }) => {
 
   useEffect(() => {
     if (editData) {
+      console.log(editData)
       setForm(editData);
     }
   }, [editData]);
@@ -64,7 +64,7 @@ export const AddProductModal = ({ open, onClose, onSave, editData }) => {
           <select name="categoryId" value={form.categoryId} onChange={handleChange}>
             <option value="">Select Category</option>
             {categories.map(cat => (
-              <option key={cat.id} value={cat.id}>
+              <option key={cat.id} value={cat.id} defaultChecked={form.categoryId == cat.id ? true : false}>
                 {cat.name}
               </option>
             ))}
@@ -80,7 +80,6 @@ export const AddProductModal = ({ open, onClose, onSave, editData }) => {
             <button type="submit">Save</button>
           </div>
         </form>
-
       </div>
     </div>
   );

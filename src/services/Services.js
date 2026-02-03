@@ -72,3 +72,7 @@ export const getAllCartItems = async() => {
   const res = await api.get('/ecommerce/cart');
   return res;
 }
+export const deleteCartItem = async(id) => {
+  const res = await api.delete(`/ecommerce/cart/${id}`)
+  return res;
+}

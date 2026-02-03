@@ -1,0 +1,132 @@
+.cart-card {
+  background-color: white;
+  padding: 1.5rem;
+
+}
+
+.cart-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 12px;
+}
+
+.cart-item img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.cart-details {
+  flex: 1;
+}
+
+.cart-details h4 {
+  margin: 0;
+}
+
+.muted {
+  color: #888;
+  font-size: 14px;
+}
+
+.price-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 6px 0;
+}
+
+.discount {
+  font-size: 12px;
+  color: #2e7d32;
+  font-weight: 600;
+}
+
+.cart-subtotal {
+  font-weight: 600;
+}
+
+.cart-total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+  font-weight: 700;
+  padding-top: 12px;
+}
+
+.empty-cart {
+  color: #777;
+  text-align: center;
+}
+
+.cart-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem;
+}
+
+.cart-actions>button {
+  width: 100%;
+  padding: 0.9rem 1.2rem;
+  margin-top: 1.5rem;
+
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
+  color: #ffffff;
+
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 10px 20px rgba(79, 70, 229, 0.25);
+}
+
+.cart-actions>button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(79, 70, 229, 0.35);
+
+}
+
+.cart-actions>button:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 12px rgba(79, 70, 229, 0.25);
+}
+
+.cart-actions>button:disabled {
+  background: #c7d2fe;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.cart-item-actions > button {
+  transition: all 0.25s ease;
+}
+.cart-item-actions > .cart-item-delete{
+  box-shadow: 5px 5px 5px lightblue;
+  border-radius: 10px;
+  background: none;
+  border: none;
+  padding: 1rem;
+  cursor: pointer;
+  background-color: red;
+  color: white;
+}
+
+.cart-item-actions > .cart-item-delete:hover{
+  transform: translateY(-2px);
+}
+
+.cart-item-actions > .cart-item-delete:active{
+  transform: translateY(0px);
+}

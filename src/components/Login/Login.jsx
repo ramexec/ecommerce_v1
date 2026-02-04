@@ -50,7 +50,11 @@ export const Login = () => {
             await auth.signup(data)
             setMode("login")
         }catch(err){
-            Object.values(err?.response?.data || {}).forEach((msg) => toast.error(msg))
+            switch(err.code){
+                case 409: toast.error(err.error);break;
+                case undefined : Object.values(err).forEach((msg) => toast.error(msg));break;
+                default: toast.error("Cannot connect to server")
+            }
         }
       
     }

@@ -1,31 +1,42 @@
 import React, { useState, useEffect } from 'react';
 import './Cart.css';
-import {deleteCartItem, getAllCartItems} from "../../../services/Services"
+import {checkOutCurrentCart, deleteCartItem, getAllCartItems} from "../../../services/Services"
 import {Trash } from 'lucide-react';
 import { toast } from 'react-toastify';
+
 export const Cart = () => {
     const [cartItems, setCartItems] = useState([]);
-
+    const [loading,setLoading] = useState(false);
+    const [checkoutLoading, setCheckOutLoading] = useState(false);
     useEffect(() => {
         handleGetCartItems();
     }, []);
 
     const handleGetCartItems = async () => {
+        setLoading(true);
         try {
             const res = await getAllCartItems();
             setCartItems(res.data);
         } catch (err) {
-           toast.error("Items Failed to load")
+            switch(err.code){
+                case 404:break;
+                default:toast.error("Items Failed to load")
+            }
+        }finally{
+            setLoading(false)
         }
     };
 
     const handleDeleteItem = async (id) => {
+        setLoading(true)
         try {
             const res = await deleteCartItem(id);
             handleGetCartItems();
         } catch (error) {
             console.log(error)
             toast.error("Failed to Delete item")
+        }finally{
+            setLoading(false)
         }
     }
 
@@ -39,6 +50,19 @@ export const Cart = () => {
                 item.quantity
         );
     }, 0);
+
+    const handleCheckOut = async () => {
+        setCheckOutLoading(true)
+        try {
+            const res = await checkOutCurrentCart();
+            toast.success("Order placed successfully")
+        } catch (err) {
+            console.log(err)
+            toast.error(err.error);
+        }finally{
+            setCheckOutLoading(false);
+        }
+    }
 
     return (
         <div className='cart-card'>
@@ -100,7 +124,7 @@ export const Cart = () => {
                         <span>Rs.{cartTotal.toFixed(2)}</span>
                     </div>
                     <div className="cart-actions">
-                        <button onClick={() => {}} > Checkout </button>
+                        <button onClick={!checkoutLoading ? handleCheckOut : null} > {!checkoutLoading ? "Checkout" : "Loading ..."} </button>
                     </div>
                 </div>
             )}

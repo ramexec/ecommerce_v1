@@ -5,7 +5,7 @@ export const loginbackend = async (data) => {
     const res = await api.post('/auth/login', data)
     return res.data
   } catch (err) {
-    throw err
+     throw err.response.data;
   }
 }
 
@@ -14,6 +14,6 @@ export const signupbackend = async (data) =>{
     const res = await api.post('/auth/signup', data)
     return res.data
   } catch (err) {
-    throw err
+    throw err.response.data;
   }
 }

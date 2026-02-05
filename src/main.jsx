@@ -15,6 +15,7 @@ import { Category } from './components/Admin/Category/Category'
 import { Cart } from './components/Profile/Cart/Cart'
 import { Info } from './components/Profile/Info/Info'
 import { Orders } from './components/Profile/Orders/Orders'
+import { AdminOrders } from './components/Admin/Orders/AdminOrders'
 
 const router = createHashRouter([
   {
@@ -47,7 +48,8 @@ const router = createHashRouter([
               { index: true, element: <Dashboard /> },
               { path: "dashboard", element: <Dashboard /> },
               { path: "products", element: <Products /> },
-              { path: "category", element: <Category /> }
+              { path: "category", element: <Category /> },
+              { path: "orders", element: <AdminOrders /> }
             ]
           }
         ]

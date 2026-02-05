@@ -1,18 +1,15 @@
-/* Full screen container */
+
 .profile-container {
-  width: 100vw;
-  height: 100vh;
   background: #f5f7fa;
 }
 
-/* Layout wrapper */
 .profile-layout {
   display: flex;
   height: 100%;
   width: 100%;
+  min-height: 90vh;
 }
 
-/* Sidebar */
 .profile-links {
   width: 240px;
   background: #ffffff;
@@ -20,19 +17,16 @@
   padding: 1.5rem 1rem;
 }
 
-/* Nav list */
 .profile-links ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-/* Nav items */
 .profile-links li {
   margin-bottom: 0.75rem;
 }
 
-/* Nav links */
 .profile-links a {
   display: block;
   padding: 0.8rem 1rem;
@@ -48,21 +42,16 @@
   color: #4f46e5;
 }
 
-/* Active link */
 .profile-links a.active {
   background: #4f46e5;
   color: #ffffff;
 }
 
-/* Main content area */
 .profile-main {
   flex: 1;
   background: #f9fafb;
   padding: 2rem;
-  overflow-y: auto;
 }
-
-/* Responsive sidebar */
 @media (max-width: 768px) {
   .profile-layout {
     flex-direction: column;

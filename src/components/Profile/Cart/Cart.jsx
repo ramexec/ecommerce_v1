@@ -19,7 +19,7 @@ export const Cart = () => {
             setCartItems(res.data);
         } catch (err) {
             switch(err.code){
-                case 404:break;
+                case 404:setCartItems([]);break;
                 default:toast.error("Items Failed to load")
             }
         }finally{
@@ -56,6 +56,8 @@ export const Cart = () => {
         try {
             const res = await checkOutCurrentCart();
             toast.success("Order placed successfully")
+
+            handleGetCartItems()
         } catch (err) {
             console.log(err)
             toast.error(err.error);

@@ -29,6 +29,9 @@ export const Admin = () => {
           <li className={tab === 'category' ? "active" : ""}>
             <NavLink to="category" className="nav-text">Category</NavLink>
           </li>
+          <li className={tab === 'orders' ? "active" : ""}>
+            <NavLink to="orders" className="nav-text">Orders</NavLink>
+          </li>
         </ul>
 
         {/* Mobile nav */}
@@ -42,10 +45,13 @@ export const Admin = () => {
           <li className={tab === 'category' ? "active" : ""}>
             <NavLink to="category" className="nav-text">Category</NavLink>
           </li>
+          <li className={tab === 'orders' ? "active" : ""}>
+                <NavLink to="orders" className="nav-text">Orders</NavLink>
+          </li>
           <li>
             <select defaultValue={"more"} name="admin-navigation-links-mobile-options">
               <option disabled value="more">More</option>
-              <option>Some option</option>
+              <option></option>
               <option>Some option</option>
             </select>
           </li>

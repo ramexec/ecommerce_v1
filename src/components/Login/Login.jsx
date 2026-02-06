@@ -1,62 +1,64 @@
-import { Lock, LogIn, Mail, TableRowsSplit, User } from 'lucide-react';
+import { Lock, LogIn, Mail, Phone, TableRowsSplit, User } from 'lucide-react';
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../services/Auth';
 import './Login.css';
-import {toast} from "react-toastify"
+import { toast } from "react-toastify"
 
 export const Login = () => {
 
-    const [mode,setMode] = useState('login')
+    const [mode, setMode] = useState('login')
 
-    const [firstName,setFirstName] = useState('');
-    const [secondName,setSecondName] = useState('');
-    const [email,setEmail] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [secondName, setSecondName] = useState('');
+    const [email, setEmail] = useState('');
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    
+
+    const [phone, setPhone] = useState('');
+
     const auth = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
 
     const redirectPath = location.state?.path || '/';
-    
+
     const handleSubmitLogin = async () => {
         const data = {
-            "username":username,
-            "password":password
+            "username": username,
+            "password": password
         }
-        try{
+        try {
             await auth.login(data);
             navigate(redirectPath, { replace: true });
-        }catch(err){
+        } catch (err) {
             toast.error(err?.response?.data?.error);
         }
-    
+
     };
 
-    const handleSubmitRegister = async () =>
-    {
+    const handleSubmitRegister = async () => {
         const data = {
-            "firstName":firstName.trim(),
-            "secondName":secondName.trim(),
-            "email":email.trim(),
-            "username":username.trim(),
-            "password":password.trim()
+            "firstName": firstName.trim(),
+            "secondName": secondName.trim(),
+            "email": email.trim(),
+            "username": username.trim(),
+            "password": password.trim(),
+            "phone": phone.trim()
         }
 
-        try{
+        try {
             await auth.signup(data)
             setMode("login")
-        }catch(err){
-            switch(err.code){
-                case 409: toast.error(err.error);break;
-                case undefined : Object.values(err).forEach((msg) => toast.error(msg));break;
+        } catch (err) {
+            switch (err.code) {
+                case 409: toast.error(err.error); break;
+                case undefined: Object.values(err).forEach((msg) => toast.error(msg)); break;
                 default: toast.error("Cannot connect to server")
             }
         }
-      
+
     }
 
     return (
@@ -66,50 +68,64 @@ export const Login = () => {
                     <h1 className="login-title">Welcome Back</h1>
                     <p className="login-subtitle">Please login to your account</p>
                 </div>
-                {mode ==='register' && (
-                <div className="register">
-                    <div className="register-name">
+                {mode === 'register' && (
+                    <div className="register">
+                        <div className="register-name">
+                            <div className="section">
+                                <label>First Name</label>
+                                <div className="input-wrapper">
+                                    <User size={20} className="input-icon" />
+                                    <input
+                                        type="text"
+                                        placeholder="Enter your Firstname"
+                                        value={firstName}
+                                        onChange={(e) => setFirstName(e.target.value)}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="section">
+                                <label>Second Name</label>
+                                <div className="input-wrapper">
+                                    <User size={20} className="input-icon" />
+                                    <input
+                                        type="text"
+                                        placeholder="Enter your Secondname"
+                                        value={secondName}
+                                        onChange={(e) => setSecondName(e.target.value)}
+                                    />
+                                </div>
+                            </div>
+                        </div>
                         <div className="section">
-                            <label>First Name</label>
+                            <label>Email</label>
                             <div className="input-wrapper">
-                                <User size={20} className="input-icon" />
+                                <Mail size={20} className="input-icon" />
                                 <input
-                                    type="text"
-                                    placeholder="Enter your Firstname"
-                                    value={firstName}
-                                    onChange={(e) => setFirstName(e.target.value)}
+                                    type="email"
+                                    placeholder="email@email.com"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
                                 />
                             </div>
                         </div>
-                        
                         <div className="section">
-                            <label>Second Name</label>
+                            <label>Phone</label>
                             <div className="input-wrapper">
-                                <User size={20} className="input-icon" />
+                                <Phone size={20} className="input-icon" />
                                 <input
                                     type="text"
-                                    placeholder="Enter your Secondname"
-                                    value={secondName}
-                                    onChange={(e) => setSecondName(e.target.value)}
+                                    placeholder="Enter your mobile number"
+                                    value={phone}
+                                    onChange={(e) => setPhone(e.target.value)}
                                 />
                             </div>
                         </div>
                     </div>
-                    <div className="section">
-                        <label>Email</label>
-                        <div className="input-wrapper">
-                            <Mail size={20} className="input-icon" />
-                            <input
-                                type="email"
-                                placeholder="email@email.com"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                        </div>
-                    </div>
-                </div>
+
+
                 )}
-                
+
                 <div className="section">
                     <label>Username</label>
                     <div className="input-wrapper">
@@ -122,6 +138,8 @@ export const Login = () => {
                         />
                     </div>
                 </div>
+
+
 
                 <div className="section">
                     <label>Password</label>
@@ -136,7 +154,7 @@ export const Login = () => {
                     </div>
                 </div>
 
-                <button className='login-btn' onClick={mode === 'login' ? handleSubmitLogin: handleSubmitRegister} disabled={auth.loading}>
+                <button className='login-btn' onClick={mode === 'login' ? handleSubmitLogin : handleSubmitRegister} disabled={auth.loading}>
                     {auth.loading ? (
                         'Loading...'
                     ) : (
@@ -148,8 +166,8 @@ export const Login = () => {
                 </button>
 
                 <div className="login-footer">{mode != 'register' ? "Don't have an account? " : "Have an account? "}
-                     {mode !== 'register' && (<a className="register-btn" onClick={() => setMode('register')}>Register now</a>)}
-                     {mode !== 'login' && (<a className="register-btn" onClick={() => setMode('login')}>Login now</a>)}
+                    {mode !== 'register' && (<a className="register-btn" onClick={() => setMode('register')}>Register now</a>)}
+                    {mode !== 'login' && (<a className="register-btn" onClick={() => setMode('login')}>Login now</a>)}
                 </div>
             </div>
         </div>

@@ -69,12 +69,18 @@ export const checkOutCurrentCart = async () => {
   return handleTry(() => api.post('/ecommerce/cart/checkout'));
 }
 
+//Orders
+
 export const getAllOrders = async (page,size) => {
   return handleTry(() => api.get(`/ecommerce/orders?page=${page}&size=${size}`));
 }
 
 export const getAllOrdersAdmin = async (page,size) => {
   return handleTry(() => api.get(`/ecommerce/admin/orders?page=${page}&size=${size}`));
+}
+
+export const updateOrder = async (id,data) => {
+  return handleTry(() => api.post(`/ecommerce/admin/order/${id}`,data));
 }
 
 //Utility function 
